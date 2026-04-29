@@ -15,8 +15,12 @@ import (
 )
 
 var DownloadUrls = []string{
-	"https://cdn.jsdelivr.net/gh/lionsoul2014/ip2region/data/ip2region.xdb",
-	"https://raw.githubusercontent.com/lionsoul2014/ip2region/master/data/ip2region.xdb",
+	"https://cdn.jsdelivr.net/gh/lionsoul2014/ip2region/data/ip2region_v4.xdb",
+	"https://raw.githubusercontent.com/lionsoul2014/ip2region/master/data/ip2region_v4.xdb",
+}
+
+var DownloadUrlsV6 = []string{
+	"https://raw.githubusercontent.com/lionsoul2014/ip2region/master/data/ip2region_v6.xdb",
 }
 
 type Ip2Region struct {
@@ -43,7 +47,14 @@ func NewIp2Region(filePath string) (*Ip2Region, error) {
 	if err != nil {
 		return nil, err
 	}
-	searcher, err := xdb.NewWithBuffer(data)
+
+	version, err := detectVersion(data)
+	if err != nil {
+		fmt.Printf("无法解析 ip2region xdb 数据库版本: %s\n", err)
+		return nil, err
+	}
+
+	searcher, err := xdb.NewWithBuffer(version, data)
 	if err != nil {
 		fmt.Printf("无法解析 ip2region xdb 数据库: %s\n", err)
 		return nil, err
@@ -53,9 +64,17 @@ func NewIp2Region(filePath string) (*Ip2Region, error) {
 	}, nil
 }
 
+func detectVersion(data []byte) (*xdb.Version, error) {
+	header, err := xdb.NewHeader(data)
+	if err != nil {
+		return nil, err
+	}
+	return xdb.VersionFromHeader(header)
+}
+
 func (db Ip2Region) Find(query string, params ...string) (result fmt.Stringer, err error) {
 	if db.seacher != nil {
-		res, err := db.seacher.SearchByStr(query)
+		res, err := db.seacher.Search(query)
 		if err != nil {
 			return nil, err
 		} else {

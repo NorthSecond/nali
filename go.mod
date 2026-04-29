@@ -9,7 +9,7 @@ require (
 	github.com/google/martian v2.1.0+incompatible
 	github.com/ip2location/ip2location-go/v9 v9.6.1
 	github.com/ipipdotnet/ipdb-go v1.3.3
-	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20231013030745-3066d243cd04
+	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20260428110050-fedf5aaf0308
 	github.com/oschwald/geoip2-golang v1.9.0
 	github.com/saracen/go7z v0.0.0-20191010121135-9c09b6bd7fda
 	github.com/spf13/cobra v1.8.0
@@ -28,6 +28,7 @@ require (
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/oschwald/maxminddb-golang v1.12.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.1 // indirect
