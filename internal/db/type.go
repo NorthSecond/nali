@@ -44,7 +44,7 @@ func (d *DB) get() (db dbif.DB) {
 	case FormatMMDB:
 		db, err = geoip.NewGeoIP(filePath)
 	case FormatIP2Region:
-		db, err = ip2region.NewIp2Region(filePath)
+		db, err = ip2region.NewIp2Region(filePath, d.DownloadUrls)
 	case FormatIP2Location:
 		db, err = ip2location.NewIP2Location(filePath)
 	case FormatCDNYml:

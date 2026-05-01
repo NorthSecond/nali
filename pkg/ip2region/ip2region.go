@@ -27,11 +27,14 @@ type Ip2Region struct {
 	seacher *xdb.Searcher
 }
 
-func NewIp2Region(filePath string) (*Ip2Region, error) {
+func NewIp2Region(filePath string, downloadUrls []string) (*Ip2Region, error) {
+	if len(downloadUrls) == 0 {
+		downloadUrls = DownloadUrls
+	}
 	_, err := os.Stat(filePath)
 	if err != nil && os.IsNotExist(err) {
 		log.Println("文件不存在，尝试从网络获取最新 ip2region 库")
-		_, err = download.Download(filePath, DownloadUrls...)
+		_, err = download.Download(filePath, downloadUrls...)
 		if err != nil {
 			return nil, err
 		}
